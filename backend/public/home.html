@@ -42,21 +42,33 @@
     </style>
 </head>
 <body>
+
 <div id="navbar-container"></div>
 
-    <div class="container">
-        <h1>Welcome to the Real Estate Platform</h1>
-        <p>Find and list properties easily!</p>
-        <div class="menu">
-            <a href="/listings.html">View Listings</a>
-            <a href="#">Post a Listing (Coming Soon)</a>
-        </div>
+<div class="container">
+    <h1>Welcome to the Real Estate Platform</h1>
+    <p>Find and list properties easily!</p>
+    <div class="menu">
+        <a href="/listings.html">View Listings</a>
+        <a href="#">Post a Listing (Coming Soon)</a>
     </div>
-	<script>
+</div>
+
+<div id="footer-container"></div>
+
+<script>
+    // Load Navbar
     fetch("/navbar.html")
         .then(response => response.text())
         .then(data => {
             document.getElementById("navbar-container").innerHTML = data;
+        });
+
+    // Load Footer
+    fetch("/footer.html")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("footer-container").innerHTML = data;
         });
 </script>
 

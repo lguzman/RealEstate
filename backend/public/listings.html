@@ -33,35 +33,45 @@
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
+
 <div id="navbar-container"></div>
 
-    <h1>Real Estate Listings</h1>
-    <div class="container">
-        <div id="listings">
-            <p>Loading listings...</p>
-        </div>
+<h1>Real Estate Listings</h1>
+<div class="container">
+    <div id="listings">
+        <p>Loading listings...</p>
     </div>
+</div>
 
-    <script>
-        const socket = io();
+<div id="footer-container"></div>
 
-        socket.on("connect", () => {
-            console.log("Connected to WebSocket server");
-        });
+<script>
+    const socket = io();
 
-        socket.on("update-listings", (listing) => {
-            const listingsDiv = document.getElementById("listings");
-            const newListing = document.createElement("div");
-            newListing.classList.add("listing");
-            newListing.innerHTML = `<strong>${listing.title}</strong> - ${listing.price}`;
-            listingsDiv.appendChild(newListing);
-        });
-    </script>
-	<script>
+    socket.on("connect", () => {
+        console.log("Connected to WebSocket server");
+    });
+
+    socket.on("update-listings", (listing) => {
+        const listingsDiv = document.getElementById("listings");
+        const newListing = document.createElement("div");
+        newListing.classList.add("listing");
+        newListing.innerHTML = `<strong>${listing.title}</strong> - ${listing.price}`;
+        listingsDiv.appendChild(newListing);
+    });
+
+    // Load Navbar
     fetch("/navbar.html")
         .then(response => response.text())
         .then(data => {
             document.getElementById("navbar-container").innerHTML = data;
+        });
+
+    // Load Footer
+    fetch("/footer.html")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("footer-container").innerHTML = data;
         });
 </script>
 
