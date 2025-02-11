@@ -33,6 +33,8 @@
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
+<div id="navbar-container"></div>
+
     <h1>Real Estate Listings</h1>
     <div class="container">
         <div id="listings">
@@ -55,5 +57,13 @@
             listingsDiv.appendChild(newListing);
         });
     </script>
+	<script>
+    fetch("/navbar.html")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("navbar-container").innerHTML = data;
+        });
+</script>
+
 </body>
 </html>
