@@ -4,16 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Real Estate Listings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .listing {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .listing:last-child {
+            border-bottom: none;
+        }
+    </style>
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-        const socket = io();
-        socket.on("connect", () => {
-            console.log("Connected to WebSocket server");
-        });
-    </script>
 </head>
 <body>
     <h1>Real Estate Listings</h1>
-    <p>WebSocket connection test. Open the console to see the connection log.</p>
+    <div class="container">
+        <div id="listings">
+            <p>Loading listings...</p>
+        </div>
+    </div>
+
+    <script>
+        const socket = io();
+
+        socket.on("connect", () => {
+            console.log("Connected to WebSocket server");
+        });
+
+        socket.on("update-listings", (listing) => {
+            const listingsDiv = document.getElementById("listings");
+            const newListing = document.createElement("div");
+            newListing.classList.add("listing");
+            newListing.innerHTML = `<strong>${listing.title}</strong> - ${listing.price}`;
+            listingsDiv.appendChild(newListing);
+        });
+    </script>
 </body>
 </html>
